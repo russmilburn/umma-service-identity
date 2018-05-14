@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    umma-service-identity:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: umma-service-identity
+      command: npm run run
+#      command: npm run debug
+      ports:
+        - '5858:5858'
+        - '8000:8000'
