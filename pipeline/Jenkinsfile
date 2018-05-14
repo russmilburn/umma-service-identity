@@ -12,16 +12,13 @@ pipeline
                 }
                 stage('Test') {
                     steps {
-                        sh 'pwd'
-                        sh '/pipeline/scripts/run-tests.sh'
-                        sh 'chmod +x ./pipeline/scripts/run-tests.sh'
                         sh '/pipeline/scripts/run-tests.sh'
                     }
                 }
             }
             post {
                 always {
-                    junit '/reports/*.xml'
+                    junit '**/target/*.xml'
                 }
             }
         }
