@@ -1,13 +1,19 @@
 pipeline
         {
             agent { dockerfile true }
+            environment {
+                CI = 'true'
+            }
             stages {
                 stage('Build') {
-                    sh 'npm install'
+                    steps {
+                        sh 'npm install'
+                    }
                 }
-
                 stage('Test') {
-                    sh './pipeline/scripts/run-tests.sh'
+                    steps {
+                        sh './pipeline/scripts/run-tests.sh'
+                    }
                 }
             }
         }
