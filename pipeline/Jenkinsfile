@@ -12,7 +12,7 @@ pipeline
                 }
                 stage('Test') {
                     steps {
-                        echo '$PATH'
+                        echo $PATH
                         sh 'chmod +x ./pipeline/scripts/run-tests.sh'
                         sh 'pipeline/scripts/run-tests.sh'
                     }
