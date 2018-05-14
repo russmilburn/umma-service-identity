@@ -18,8 +18,8 @@ pipeline
             }
             post {
                 always {
-                    archiveArtifacts '/reports/*'
-                    junit '/reports/*.xml'
+                    archiveArtifacts 'reports/*'
+                    junit 'reports/*.xml'
                 }
             }
         }
