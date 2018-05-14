@@ -17,7 +17,7 @@ describe('Login Test Suite', function () {
             const LoginModule = require('./../src/modules/LoginModule');
 
             let module = new LoginModule();
-            assert.equal(module.login('russell', '1234'), true);
+            assert.equal(module.login('russell', '1234'), false);
         })
 
 
