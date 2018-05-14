@@ -8,11 +8,12 @@
   },
   "devDependencies": {
     "cross-env": "^5.1.5",
-    "mocha": "^5.1.1"
+    "mocha": "^5.1.1",
+    "mocha-jenkins-reporter": "^0.3.12"
   },
   "scripts": {
     "run": "node start",
     "debug": "node --inspect=5858 --debug-brk start",
-    "test": "mocha tests/*.js"
+    "test": "JUNIT_REPORT_PATH=/report.xml mocha ./tests/*.js --colors --reporter mocha-jenkins-reporter"
   }
 }
