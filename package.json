@@ -17,6 +17,6 @@
     "run": "node start",
     "debug": "node --inspect=5858 --debug-brk start",
     "test_bla": "nyc mocha ./tests/*.js --reporter mocha-jenkins-reporter",
-    "test": "nyc mocha ./tests/*.js --reporter mocha-junit-reporter --reporter-options mochaFile='reports/test_report.xml'"
+    "test": "nyc mocha ./tests/*.js --reporter mocha-junit-reporter --reporter-options mochaFile='/reports/test_report.xml'"
   }
 }
