@@ -13,6 +13,7 @@ pipeline
                 stage('Test') {
                     steps {
                         sh 'chmod +x ./pipeline/scripts/run-tests.sh'
+                        sh './pipeline/scripts/run-tests.sh'
                     }
                 }
             }
