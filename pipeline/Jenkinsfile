@@ -13,8 +13,9 @@ pipeline
                 stage('Test') {
                     steps {
                         sh 'pwd'
+                        sh 'ls /pipeline/scripts'
                         sh 'chmod +x ./pipeline/scripts/run-tests.sh'
-                        sh 'pipeline/scripts/run-tests.sh'
+                        sh 'pwd/pipeline/scripts/run-tests.sh'
                     }
                 }
             }
