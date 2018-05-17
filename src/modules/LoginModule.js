@@ -5,6 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const DbConnection = require('./../database/DbConnection');
 const SchemaList = require('./../database/schemas/SchemaList');
+const bcrypt = require('bcrypt');
+const ServiceError = require('./../utils/ServiceError');
+const StatusCode = require('./../utils/StatusCode');
 
 class Login {
   constructor() {
@@ -12,54 +15,49 @@ class Login {
   }
 
   login(username, password) {
-    logger.info('user logged in :', username);
-    // let user = {u
-    //   username: username,
-    //   firstName: 'russell',
-    //   lastName: 'milburn',
-    // };
-
-    // let User = new DbConnection().getDatabase().model(SchemaList.USER);
-    // let myUser = new User();
-    // myUser.username = 'russell';
-    // myUser.password = 'password';
-    // myUser.save().then(function (err) {
-    //   if (err){
-    //     logger.error(err)
-    //   }
-    // });
-
-    this.getUser(username)
+    logger.info('user logged in :' + username);
+    return this.getUser(username)
       .then(this.verifyUser.bind(this, password))
-
-
-    return this.generateJwt(user)
-      .then(this.getMyUser.bind(this));
+      .then(this.generateJwt.bind(this));
   }
 
-  getUser(username){
+  getUser(username) {
     let db = new DbConnection().getDatabase();
     let User = db.model(SchemaList.USER);
     return User.findOne({username: username})
-      .then((user) =>{
+      .then((user) => {
+        if (user === null){
+          throw new ServiceError('User not found', StatusCode.NOT_FOUND);
+        }
         return user;
       }, (err => {
         throw err;
       }))
   }
 
-  verifyUser(password, model){
-    return model.comparePasswords(password, function (err, isMatch) {
-      if (err){
+  verifyUser(candidatePassword, model) {
+    return bcrypt.compare(candidatePassword, model.password)
+      .then((isMatch) => {
+        logger.info('verification successful :' + isMatch);
+        if (isMatch) {
+          return model.toObject();
+        }else{
+          throw new ServiceError('incorrect password', StatusCode.AUTH_FAILURE);
+        }
+      }, (err) => {
         logger.error(err)
-      }
-      logger.info(isMatch);
-    })
+        
+      })
   }
 
   generateJwt(user) {
-    logger.debug('generateJwt : ' + user);
+    logger.debug('generateJwt');
+    delete user._id;
+    delete user.__v;
+    delete user.password;
+
     let payload = user;
+    //TODO: get from evn config
     let minsTilExpiry = '';
     let options = {
       algorithm: 'RS256',

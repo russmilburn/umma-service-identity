@@ -31,6 +31,28 @@ userSchema.pre('save', function (next) {
   })
 });
 
+// userSchema.pre('save', userSchema.savePassword);
+
+// userSchema.method.savePassword = function (next) {
+//   let user = this;
+//   if (!user.isModified('password')) {
+//     return next();
+//   }
+//
+//   bcrypt.genSalt(saltWorkFactor, function (err, salt) {
+//     if (err) {
+//       return next();
+//     }
+//     bcrypt.hash(user.password, salt, function (err, hash) {
+//       if (err) {
+//         return next();
+//       }
+//       user.password = hash;
+//       next();
+//     })
+//   })
+// };
+
 userSchema.methods.comparePasswords = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) {
