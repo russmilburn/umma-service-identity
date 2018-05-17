@@ -1,19 +1,23 @@
 const LoginModule = require('./../modules/LoginModule');
+const logger = require('./../utils/Logger');
 
-
-function LoginController(){
+function LoginController() {
   let self = this;
-  
+
   this.router = require('express').Router();
-  
+
   this.router.post('/login', processLogin);
-  
-  console.log('LoginController');
-  
-  function processLogin(req, res){
-    console.log('processLogin');
+
+  logger.debug('LoginController');
+
+  function processLogin(req, res, next) {
+    logger.debug('processLogin');
     let module = new LoginModule();
-    res.send(module.login(req.body.username, req.body.password));
+    module.login(req.body.username, req.body.password)
+      .then(next, function (err) {
+        logger.error(err);
+        logger.error(err.stack);
+      });
   }
 }
 

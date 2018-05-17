@@ -1,0 +1,5 @@
+LOG_LEVEL = debug
+SERVICE_NAME = identity
+SERVICE_VERSION = v0
+JWT_PRIVATE_KEY = jwtRS256.key
+JWT_PUBLIC_KEY = jwtRS256.key.pub
