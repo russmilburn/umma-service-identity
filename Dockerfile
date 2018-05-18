@@ -1,12 +1,11 @@
 FROM node:6.14.2-alpine
 RUN mkdir app
-COPY package.json /app
-WORKDIR /app
+COPY package.json .
 RUN apk update && apk add bash
 ENV GLIBC_VERSION 2.25-r0
 #RUN npm install mockgoose mongoose && node -e "var mongoose = require('mongoose'); var Mockgoose = require('mockgoose').Mockgoose; var mockgoose = new Mockgoose(mongoose); mockgoose.prepareStorage().then(() => process.exit(0))"
 RUN npm install
-COPY . /app
+COPY . .
 
 #RUN ["npm", "run" ]
 
