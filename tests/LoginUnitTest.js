@@ -17,6 +17,7 @@ describe('Login Test Suite', function () {
   
   before(function (done) {
     logger = new MockLogger(true);
+    logger.info('Running LoginUnitTest');
     mockDatabase = new MockDatabase();
     mockDatabase.init(true).then(onSuccess, onFailure);
     

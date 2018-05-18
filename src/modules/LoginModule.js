@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const DbConnection = require('./../database/DbConnection');
 const SchemaList = require('./../database/schemas/SchemaList');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const ServiceError = require('./../utils/ServiceError');
 const StatusCode = require('./../utils/StatusCode');
 

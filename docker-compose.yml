@@ -6,7 +6,8 @@ services:
         context: .
         dockerfile: Dockerfile
       container_name: umma-service-identity
-      command: npm run run
+#      command: npm run run
+      command: npm run test -d
 #      command: npm run debug
       ports:
         - '5858:5858'
