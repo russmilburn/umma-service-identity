@@ -17,12 +17,7 @@ pipeline
                 }
 
                 stage('Deploy'){
-                    agent {
-                        docker {
-                            image 'node/6.14.2-alpine'
-                        }
-                    }
-                    steps{
+                    docker.image('node/6.14.2-alpine').inside{
                         sh 'npm install'
                         sh 'npm start'
                     }
