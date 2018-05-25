@@ -6,8 +6,9 @@ pipeline
                 CI = 'true'
             }
             stages {
-                agent { dockerfile true }
+
                 stage('Build & Test') {
+                    agent { dockerfile true }
                     steps {
                         sh 'npm install'
                     }
@@ -19,14 +20,14 @@ pipeline
 //
 //                }
 
-                stage('Deploy'){
+                stage('Deploy') {
                     agent { docker 'node/6.14.2-alpine' }
 //                    agent {
 //                        docker {
 //                            image 'node/6.14.2-alpine'
 //                        }
 //                    }
-                    steps{
+                    steps {
                         sh 'npm install'
                         sh 'npm start'
                     }
