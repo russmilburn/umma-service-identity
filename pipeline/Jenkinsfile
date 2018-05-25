@@ -23,9 +23,11 @@ pipeline
 
                 stage('Deploy') {
                     agent {
-                        docker 'node:6.14.2-alpine'
-                        label 'umma-service-identity'
-                        args '-p 37017:37017 -p8000:8000'
+                        docker {
+                            image 'node:6.14.2-alpine'
+                            label 'umma-service-identity'
+                            args '-p 37017:37017 -p8000:8000'
+                        }
                     }
 //                    agent {
 //                        docker {
