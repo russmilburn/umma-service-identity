@@ -18,7 +18,7 @@ pipeline
 
                 stage('Deploy'){
                     agent {
-                        docker 'node:6.14.2-alpine'
+                        docker 'node/6.14.2-alpine'
                     }
                     steps{
                         sh 'npm install'
