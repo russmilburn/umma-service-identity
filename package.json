@@ -24,7 +24,7 @@
     "sinon": "^5.0.7"
   },
   "scripts": {
-    "run": "node start",
+    "run": "node run",
     "debug": "node --inspect=5858 --debug-brk start",
     "test_bla": "nyc mocha ./tests/*.js --reporter mocha-jenkins-reporter",
     "test": "nyc mocha --exit ./tests/*.js -t 160000 --reporter mocha-junit-reporter --reporter-options mochaFile='reports/test_report.xml'"
