@@ -11,10 +11,11 @@ pipeline
                     agent { dockerfile true }
                     steps {
                         sh 'npm install'
-                    }
-                    steps {
                         sh '/pipeline/scripts/run-tests.sh'
                     }
+//                    steps {
+//
+//                    }
                 }
 //                stage('Test') {
 //
