@@ -1,23 +1,32 @@
 pipeline
         {
-            agent { dockerfile true }
+//            agent { dockerfile true }
+            agent none
             environment {
                 CI = 'true'
             }
             stages {
-                stage('Build') {
+                agent { dockerfile true }
+                stage('Build & Test') {
                     steps {
                         sh 'npm install'
                     }
-                }
-                stage('Test') {
                     steps {
                         sh '/pipeline/scripts/run-tests.sh'
                     }
                 }
+//                stage('Test') {
+//
+//                }
 
                 stage('Deploy'){
-                    docker.image('node/6.14.2-alpine').inside{
+                    agent { docker 'node/6.14.2-alpine' }
+//                    agent {
+//                        docker {
+//                            image 'node/6.14.2-alpine'
+//                        }
+//                    }
+                    steps{
                         sh 'npm install'
                         sh 'npm start'
                     }
