@@ -21,7 +21,7 @@ class DbConnection {
 
   connect() {
     let mongoose;
-    let dbUrl = 'mongodb://guest:guest@localhost:37017/ummadb';
+    let dbUrl = 'mongodb://mr8uild8ot:7ropeomlet@ds229450.mlab.com:29450/dev-umma-db';
     let options = {
       auto_reconnect: true
     };
