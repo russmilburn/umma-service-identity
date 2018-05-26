@@ -15,7 +15,7 @@ class Login {
   }
 
   login(username, password) {
-    logger.info('user logged in :' + username);
+    logger.info('user logging in :' + username);
     return this.getUser(username)
       .then(this.verifyUser.bind(this, password))
       .then(this.generateJwt.bind(this));
@@ -27,7 +27,8 @@ class Login {
     return User.findOne({username: username})
       .then((user) => {
         if (user === null){
-          throw new ServiceError('User not found', StatusCode.NOT_FOUND);
+          let error =  new ServiceError('User not found', StatusCode.NOT_FOUND);
+          return Promise.reject(error);
         }
         return user;
       }, (err => {
@@ -42,11 +43,11 @@ class Login {
         if (isMatch) {
           return model.toObject();
         }else{
-          throw new ServiceError('incorrect password', StatusCode.AUTH_FAILURE);
+          let error =  new ServiceError('incorrect password', StatusCode.AUTH_FAILURE);
+          return Promise.reject(error);
         }
       }, (err) => {
         logger.error(err)
-        
       })
   }
 

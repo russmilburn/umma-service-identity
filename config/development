@@ -1,0 +1,5 @@
+DB_HOST = ds229450.mlab.com
+DB_PORT = 29450
+DB_NAME = dev-umma-db
+DB_USER = mr8uild8ot
+DB_PASSWORD = 7ropeomlet
