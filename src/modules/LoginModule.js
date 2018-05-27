@@ -27,7 +27,7 @@ class Login {
     return User.findOne({username: username})
       .then((user) => {
         if (user === null){
-          let error =  new ServiceError('User not found', StatusCode.NOT_FOUND);
+          let error = new ServiceError('User not found', StatusCode.NOT_FOUND);
           return Promise.reject(error);
         }
         return user;
@@ -43,7 +43,7 @@ class Login {
         if (isMatch) {
           return model.toObject();
         }else{
-          let error =  new ServiceError('incorrect password', StatusCode.AUTH_FAILURE);
+          let error = new ServiceError('incorrect password', StatusCode.AUTH_FAILURE);
           return Promise.reject(error);
         }
       }, (err) => {
@@ -83,11 +83,6 @@ class Login {
       })
     });
     return promise;
-  }
-
-  getMyUser(data) {
-    logger.debug('getMyUser: ' + data);
-    return data;
   }
 }
 

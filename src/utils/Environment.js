@@ -1,7 +1,7 @@
 function readConfig(filename) {
   console.log('Reading config from ' + filename);
   try {
-    let lines = require('fs').readFileSync(filename, 'utf-8').split('\n')
+    let lines = require('fs').readFileSync(filename, 'utf-8').split('\n');
     lines.forEach(function (line) {
       line = line.trim();
       if (line !== '' && line[0] !== '#') {

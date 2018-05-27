@@ -34,7 +34,9 @@ function IdentityService() {
   };
 
   this.setRoutes = function setRoutes() {
-    self.app.use('/identity', getController('LoginController'));
+    self.app.use('/identity', getController('IdentityController'));
+
+    // self.app.use('/identity/users', getController('UserController'));
   };
 
 
