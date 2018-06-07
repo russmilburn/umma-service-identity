@@ -1,8 +1,9 @@
 {
   "name": "umma-service-identity",
   "version": "0.0.1",
-  "description": "Identity service is the REST api for managing all user identities and rolesnpm ",
+  "description": "Identity service is the REST api for managing all user identities and roles",
   "dependencies": {
+    "amqplib": "^0.5.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
@@ -10,7 +11,8 @@
     "jsonwebtoken": "^8.2.1",
     "mongodb": "^3.1.0-beta4",
     "mongoose": "^5.1.1",
-    "q": "^1.5.1"
+    "q": "^1.5.1",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -26,7 +28,6 @@
   "scripts": {
     "start-service": "node start",
     "debug": "node --inspect=5858 --debug-brk start",
-    "test-bla": "nyc mocha ./tests/*.js --reporter mocha-jenkins-reporter",
     "test": "nyc mocha --exit ./tests/*.js -t 160000 --reporter mocha-junit-reporter --reporter-options mochaFile='reports/test_report.xml'",
     "test-coverage": "nyc report --reporter=html mocha ./tests/*.js"
   }

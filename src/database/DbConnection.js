@@ -3,11 +3,13 @@ const logger = require('./../utils/Logger');
 const Q = require('q');
 const SchemaList = require('./schemas/SchemaList');
 const UserSchema = require('./schemas/UserSchema');
+const env = require('./../utils/Environment');
 
 let instance = null;
 
 class DbConnection {
   constructor() {
+    this.modelList = null;
     if (!instance) {
       instance = this;
     }
@@ -21,7 +23,7 @@ class DbConnection {
 
   connect() {
     let mongoose;
-    let dbUrl = 'mongodb://mr8uild8ot:7ropeomlet@ds229450.mlab.com:29450/dev-umma-db';
+    let dbUrl = this.createDbUrl();
     let options = {
       auto_reconnect: true
     };
@@ -29,7 +31,7 @@ class DbConnection {
     mongoose.promise = Q.promise;
 
     let promise = new Promise(function (resolve, reject) {
-      logger.info('connecting to database');
+      logger.info('[DB] connecting to database');
       mongoose.connect(dbUrl, options, onConnComplete);
 
       function onConnComplete(err) {
@@ -40,13 +42,32 @@ class DbConnection {
             reject(err);
           }
         } else {
-          logger.info('database connected');
+          logger.info('[DB] database connected');
           mongoose.model(SchemaList.USER, UserSchema);
           resolve(mongoose);
         }
       }
     });
     return promise;
+  }
+
+  createDbUrl(){
+    let user = env.getProperty('DB_USER');
+    let password = env.getProperty('DB_PASSWORD');
+    let host = env.getProperty('DB_HOST');
+    let port = env.getProperty('DB_PORT');
+    let dbName = env.getProperty('DB_NAME');
+
+    let dbUrl = 'mongodb://' + user + ':' + password + '@' + host + ':' + port + '/' +dbName;
+    return dbUrl;
+  }
+
+  setModelList(ml){
+    this.modelList
+  }
+
+  getModelList(){
+    return this.modelList;
   }
 
   setDatabase(db) {

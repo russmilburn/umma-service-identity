@@ -8,8 +8,16 @@ let userSchema = new Schema({
   username: {type: String, required: true, index: {unique: true}},
   password: {type: String, required: true},
   firstName: String,
-  lastName: String
+  lastName: String,
+  roles: {type: Array}
 });
+
+userSchema.set('toObject', {
+  transform: function (doc, ret, options) {
+    delete ret._id;
+    delete ret.__v;
+  }
+})
 
 userSchema.pre('save', function (next) {
   let user = this;
@@ -30,36 +38,5 @@ userSchema.pre('save', function (next) {
     })
   })
 });
-
-// userSchema.pre('save', userSchema.savePassword);
-
-// userSchema.method.savePassword = function (next) {
-//   let user = this;
-//   if (!user.isModified('password')) {
-//     return next();
-//   }
-//
-//   bcrypt.genSalt(saltWorkFactor, function (err, salt) {
-//     if (err) {
-//       return next();
-//     }
-//     bcrypt.hash(user.password, salt, function (err, hash) {
-//       if (err) {
-//         return next();
-//       }
-//       user.password = hash;
-//       next();
-//     })
-//   })
-// };
-
-userSchema.methods.comparePasswords = function (candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err) {
-      return callback(err);
-    }
-    return callback(null, isMatch);
-  })
-};
 
 module.exports = userSchema;

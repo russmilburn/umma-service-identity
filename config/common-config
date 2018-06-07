@@ -3,3 +3,7 @@ SERVICE_NAME = identity
 SERVICE_VERSION = v0
 JWT_PRIVATE_KEY = jwtRS256.key
 JWT_PUBLIC_KEY = jwtRS256.key.pub
+
+EVENT_TOPIC_EXCHANGE_ID = umma_event
+FANOUT_EXCHANGE_LIST = update.identity
+

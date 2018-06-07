@@ -3,3 +3,9 @@ DB_PORT = 29450
 DB_NAME = dev-umma-db
 DB_USER = mr8uild8ot
 DB_PASSWORD = 7ropeomlet
+
+QUEUE_HOST = sidewinder.rmq.cloudamqp.com
+QUEUE_USER = vlumcrfg
+QUEUE_PASSWORD = gC-yTNMKcn5VHg6LE2Y5v7p6lGZrB_zD
+QUEUE_VHOST = vlumcrfg
+QUEUE_HEARTBEAT = 60

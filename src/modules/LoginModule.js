@@ -18,7 +18,13 @@ class Login {
     logger.info('user logging in :' + username);
     return this.getUser(username)
       .then(this.verifyUser.bind(this, password))
-      .then(this.generateJwt.bind(this));
+      .then(this.generateJwt);
+
+    // return Q.fcall(()=> {
+    //
+    // }).catch(()=> {
+    //
+    // });
   }
 
   getUser(username) {
@@ -31,9 +37,9 @@ class Login {
           return Promise.reject(error);
         }
         return user;
-      }, (err => {
+      }, (err) => {
         throw err;
-      }))
+      })
   }
 
   verifyUser(candidatePassword, model) {

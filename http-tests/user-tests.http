@@ -5,16 +5,6 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-POST http://localhost:8000/identity/login
-Content-Type:  application/json
-
-{
-    "username":"russell",
-    "password":"password"
-}
-
-###
-
 POST http://localhost:8000/identity/users
 Content-Type:  application/json
 
@@ -24,5 +14,9 @@ Content-Type:  application/json
     "firstName":"test",
     "lastName":"test"
 }
+
+###
+
+GET http://localhost:8000/identity/users
 
 ###

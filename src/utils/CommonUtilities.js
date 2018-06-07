@@ -41,7 +41,6 @@ validateInput = function validateInput(msgObj, required) {
     return message;
   }
   return valid;
-
 };
 
 
