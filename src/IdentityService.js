@@ -1,22 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const logger = require('./utils/Logger');
-const DbConnection = require('./database/DbConnection');
-const EventQueue = require('./utils/EventQueue');
+const logger = require('dinodog-framework/src/utils/Logger');
+const DbConnection = require('dinodog-framework/src/database/DbConnection');
+const EventQueue = require('dinodog-framework/src/messaging/EventQueue');
+const ServiceError = require('dinodog-framework/src/utils/ServiceError');
+const StatusCode = require('dinodog-framework/src/utils/StatusCode');
+const Authenticate = require('dinodog-framework/src/middleware/Authenticate');
+const HashMap = require('hashmap');
+const SchemaList = require('./schemas/SchemaList');
 
-function IdentityService() {
-  let self = this;
-  let dbConn = new DbConnection();
-  let eventQue = new EventQueue();
+class IdentityService {
+  constructor() {
+    this.dbConn = new DbConnection();
+    this.eventQue = new EventQueue();
+    // this.auth = new Authenticate();
+  }
 
-  this.init = function init() {
+  init() {
     logger.info('[SERVICE] start');
 
-    eventQue.setMessageHandler(self.eventHandler);
+    let schemaMap = new HashMap();
+    schemaMap.set(SchemaList.USER, require('./schemas/UserSchema'));
 
-    dbConn.init()
-      .then(eventQue.init.bind(eventQue))
-      .then(self.initExpress)
+    this.dbConn.setModelList(schemaMap);
+    this.eventQue.setMessageHandler(this.eventHandler);
+
+    this.dbConn.init()
+      .then(this.eventQue.init.bind(this.eventQue))
+      .then(this.initExpress.bind(this))
       .then(() => {
         logger.info('[SERVICE] start up successful')
       }, (err) => {
@@ -27,36 +38,42 @@ function IdentityService() {
 
   };
 
-  this.initExpress = function initExpress() {
+  initExpress() {
 
-    self.app = express();
-    self.app.use(bodyParser.json());
-    self.setRoutes();
+    this.app = express();
+    this.app.use(bodyParser.json());
+    // uncomment below if the service needs to be authenticated
+    // otherwise authenticate in the controller
+    // this.app.use(this.auth.authenticateUser);
 
-    self.app.use(function (result, req, res, next) {
+    this.setRoutes();
+
+    this.app.use(function (result, req, res, next) {
       res.send(result);
     });
 
-    self.app.listen(8000, () => {
+    this.app.listen(8000, () => {
       logger.warn('[SERVICE] listening on port 8000')
     });
     return Promise.resolve();
   };
 
-  this.setRoutes = function setRoutes() {
-    self.app.use('/identity', getController('IdentityController'));
+  setRoutes() {
+    this.app.use('/identity', this.getController('IdentityController'));
 
-    // self.app.use('/identity/users', getController('UserController'));
+    this.app.all('*', function () {
+      self.logger.error('Invalid URL');
+      throw new ServiceError('Invalid_URL', StatusCode.NOT_FOUND);
+    });
   };
 
-
-  function getController(name) {
+  getController(name) {
     let Controller = require('./controllers/' + name);
     let controller = new Controller();
     return controller.getRouter();
   }
 
-  this.eventHandler = function eventHandler(msg) {
+  eventHandler(msg) {
     let data = msg.content.toString();
     let event = JSON.parse(data);
     logger.debug('event ::' + JSON.stringify(event));

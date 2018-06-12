@@ -1,10 +1,11 @@
-const logger = require('./../utils/Logger');
-const DbConnection = require('./../database/DbConnection');
-const SchemaList = require('./../database/schemas/SchemaList');
-const Utils = require('./../utils/CommonUtilities');
-const ServiceError = require('./../utils/ServiceError');
-const StatusCode = require('./../utils/StatusCode');
-const EventQueue = require('./../utils/EventQueue');
+const logger = require('dinodog-framework/src/utils/Logger');
+const DbConnection = require('dinodog-framework/src/database/DbConnection');
+const ServiceError = require('dinodog-framework/src/utils/ServiceError');
+const StatusCode = require('dinodog-framework/src/utils/StatusCode');
+const EventQueue = require('dinodog-framework/src/messaging/EventQueue');
+const Utils = require('dinodog-framework/src/utils/CommonUtilities');
+
+const SchemaList = require('../schemas/SchemaList');
 
 
 class UserModule {

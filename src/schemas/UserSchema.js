@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const logger = require('./../../utils/Logger');
 const Schema = mongoose.Schema;
 const saltWorkFactor = 10;
 
@@ -9,15 +8,20 @@ let userSchema = new Schema({
   password: {type: String, required: true},
   firstName: String,
   lastName: String,
-  roles: {type: Array}
+  roles: {
+    type: Array,
+    default: void 0,
+    required: false
+  }
 });
 
 userSchema.set('toObject', {
   transform: function (doc, ret, options) {
     delete ret._id;
     delete ret.__v;
-  }
-})
+  },
+  minimize: true,
+});
 
 userSchema.pre('save', function (next) {
   let user = this;

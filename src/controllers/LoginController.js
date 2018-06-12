@@ -1,9 +1,11 @@
 const LoginModule = require('./../modules/LoginModule');
-const logger = require('./../utils/Logger');
+const logger = require('dinodog-framework/src/utils/Logger');
+const BaseController = require('dinodog-framework/src/base/BaseController');
 
 
-class LoginController{
-  constructor(){
+class LoginController extends BaseController {
+  constructor() {
+    super();
     this.router = require('express').Router();
     this.router.post('/', this.processLogin)
   }
@@ -15,7 +17,7 @@ class LoginController{
       .then(next, next);
   }
 
-  getRouter(){
+  getRouter() {
     return this.router
   }
 }

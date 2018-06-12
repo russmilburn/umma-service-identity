@@ -1,4 +1,4 @@
-const env = require('./src/utils/Environment');
+const env = require('dinodog-framework/src/utils/Environment');
 env.readConfig('./config/common-config');
 env.readConfig('./config/development');
 env.readConfig('./config/container');

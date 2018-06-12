@@ -1,13 +1,13 @@
-const logger = require('./../utils/Logger');
-const env = require('./../utils/Environment');
+const logger = require('dinodog-framework/src/utils/Logger');
+const DbConnection = require('dinodog-framework/src/database/DbConnection');
+const env = require('dinodog-framework/src/utils/Environment');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
-const DbConnection = require('./../database/DbConnection');
-const SchemaList = require('./../database/schemas/SchemaList');
+const SchemaList = require('./../schemas/SchemaList');
 const bcrypt = require('bcryptjs');
-const ServiceError = require('./../utils/ServiceError');
-const StatusCode = require('./../utils/StatusCode');
+const ServiceError = require('dinodog-framework/src/utils/ServiceError');
+const StatusCode = require('dinodog-framework/src/utils/StatusCode');
 
 class Login {
   constructor() {

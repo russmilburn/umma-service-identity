@@ -1,11 +1,12 @@
 const chai = require('chai');
 const proxyquire = require("proxyquire");
 const Q = require('q');
+const HashMap = require('hashmap');
 
 const expect = chai.expect;
-const MockLogger = require('./mocks/MockLogger');
-const MockDatabase = require('./mocks/MockDatabase');
-const SchemaList = require('./../src/database/schemas/SchemaList');
+const MockLogger = require('dinodog-framework/src/mocks/MockLogger');
+const MockDatabase = require('dinodog-framework/src/mocks/MockDatabase');
+const SchemaList = require('../src/schemas/SchemaList');
 
 describe('User Test Suite', function () {
   let logger;
@@ -17,6 +18,12 @@ describe('User Test Suite', function () {
     logger = new MockLogger(true);
     logger.info('Running UserModuleUnitTest');
     mockDatabase = new MockDatabase();
+
+    let schemaMap = new HashMap();
+    schemaMap.set(SchemaList.USER, require('./../src/schemas/UserSchema'));
+
+    mockDatabase.setModelList(schemaMap);
+
     mockDatabase.init(true).then(onSuccess, onFailure);
 
     function onSuccess() {
@@ -46,8 +53,8 @@ describe('User Test Suite', function () {
   beforeEach(function (done) {
 
     let stubs = {
-      './../utils/Logger': logger,
-      './../database/DbConnection': MockDatabase
+      'dinodog-framework/src/utils/Logger': logger,
+      'dinodog-framework/src/database/DbConnection': MockDatabase
     };
     let UserModule = proxyquire('./../src/modules/UserModule', stubs);
     module = new UserModule();
